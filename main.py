@@ -116,7 +116,7 @@ class ExpenseTracker:
             writer = csv.writer(f)
             writer.writerow(["ID", "Name", "Amount", "Date", "Category"])
             writer.writerows(expenses)
-        print(f"✅ Expenses exported to {path}")
+        print(f"Expenses exported to {path}")
 
     def set_budget_alert(self, amount):
         self.budget_alert = amount
@@ -124,7 +124,7 @@ class ExpenseTracker:
     def check_budget_alert(self):
         total = self.total_spending()
         if self.budget_alert and total > self.budget_alert:
-            print(f"⚠️ Alert! You exceeded your budget of ${self.budget_alert:.2f} by ${total - self.budget_alert:.2f}")
+            print(f" Alert! You exceeded your budget of ${self.budget_alert:.2f} by ${total - self.budget_alert:.2f}")
 
     def close(self):
         self.db.close()
@@ -160,17 +160,17 @@ def print_table(rows, headers):
     print("─" * 80)
 
 def print_chart(data, title):
-    print(f"\n📊 {title}")
+    print(f"\n {title}")
     total = sum(amount for _, amount in data)
     for category, amount in data:
-        bar = "█" * int((amount / total) * 40) if total else ""
+        bar = "" * int((amount / total) * 40) if total else ""
         print(f"{category:<15} | {bar} {amount:.2f}")
     print()
 
 # ---------------- CLI Dashboard ----------------
 def main():
     tracker = ExpenseTracker()
-    print("💰 Smart Expense Tracker 2026 - Recruiter-Ready Dashboard 💰")
+    print(" Smart Expense Tracker 2026 - Recruiter-Ready Dashboard ")
 
     while True:
         tracker.check_budget_alert()
@@ -193,17 +193,17 @@ def main():
             category = input("Category: ").strip()
 
             if not name or not category:
-                print("❌ Name and category cannot be empty.")
+                print(" Name and category cannot be empty.")
                 continue
             if not validate_amount(amount):
-                print("❌ Amount must be >= 0.")
+                print("Amount must be >= 0.")
                 continue
             if not validate_date(date):
-                print("❌ Invalid date format (YYYY-MM-DD).")
+                print(" Invalid date format (YYYY-MM-DD).")
                 continue
 
             tracker.add_expense(Expense(name, amount, date, category))
-            print("✅ Expense added successfully!")
+            print("Expense added successfully!")
 
         elif choice == "2":
             filter_cat = input("Filter by category (optional): ").strip() or None
@@ -216,7 +216,7 @@ def main():
 
         elif choice == "3":
             total = tracker.total_spending()
-            print(f"💵 Total Spending: ${total:.2f}")
+            print(f"Total Spending: ${total:.2f}")
 
         elif choice == "4":
             summary = tracker.category_summary()
@@ -230,10 +230,10 @@ def main():
             month = input("Month (1-12): ").strip()
             year = input("Year (YYYY): ").strip()
             if not validate_integer(month) or not (1 <= int(month) <= 12):
-                print("❌ Invalid month.")
+                print("Invalid month.")
                 continue
             if not validate_integer(year) or len(year) != 4:
-                print("❌ Invalid year.")
+                print("Invalid year.")
                 continue
             summary = tracker.monthly_summary(int(month), int(year))
             if summary:
@@ -255,18 +255,18 @@ def main():
         elif choice == "8":
             budget = input("Set budget alert amount: ").strip()
             if not validate_amount(budget):
-                print("❌ Invalid budget amount.")
+                print(" Invalid budget amount.")
                 continue
             tracker.set_budget_alert(float(budget))
-            print(f"✅ Budget alert set at ${budget}")
+            print(f"Budget alert set at ${budget}")
 
         elif choice == "9":
             tracker.close()
-            print("👋 Goodbye!")
+            print(" Goodbye!")
             break
 
         else:
-            print("❌ Invalid choice! Enter 1-9.")
+            print(" Invalid choice! Enter 1-9.")
 
 if __name__ == "__main__":
     main()
