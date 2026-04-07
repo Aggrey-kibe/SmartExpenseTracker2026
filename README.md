@@ -1,33 +1,33 @@
-# SmartExpenseTracker2026
-A Python CLI expense tracker that helps you log, monitor, and analyze your spending. Features include category summaries, monthly reports, CSV exports, and budget alerts. Perfect for learning clean Python, database handling, and real-world financial tracking.
 
+Project structure
 
 SmartExpenseTracker/
 │
 ├── README.md
 ├── requirements.txt
 ├── main.py
-├── data/               # Empty folder, DB will auto-create
+├── data/               # Empty folder, DB auto-creates
 ├── exports/            # Empty folder, CSV exports go here
 ├── src/
 │   ├── expense.py
 │   └── tracker.py
 └── tests/
     └── test_tracker.py
-
-Plain text
+src/expense.py
+Python
+# src/expense.py
 # Smart Expense Tracker 2026
 # Python Standard Library only
 
-Python
 class Expense:
     def __init__(self, name: str, amount: float, date: str, category: str):
         self.name = name.strip()
         self.amount = float(amount)
         self.date = date.strip()
         self.category = category.strip()
- Ft
+src/tracker.py
 Python
+# src/tracker.py
 import sqlite3
 from pathlib import Path
 import csv
@@ -71,6 +71,7 @@ class Database:
 
     def close(self):
         self.conn.close()
+
 
 class ExpenseTracker:
     def __init__(self):
@@ -139,19 +140,11 @@ class ExpenseTracker:
     def check_budget_alert(self):
         total = self.total_spending()
         if self.budget_alert and total > self.budget_alert:
-            print(f"  Alert! You exceeded your budget of ${self.budget_alert:.2f} by ${total - self.budget_alert:.2f}")
+            print(f" Alert! You exceeded your budget of ${self.budget_alert:.2f} by ${total - self.budget_alert:.2f}")
 
     def close(self):
         self.db.close()
-
-Copy your full CLI code exactly (the one with validate_date, validate_amount, print_table, print_chart, and main()), making sure the first lines import your modules:
-Python
-from src.expense import Expense
-from src.tracker import ExpenseTracker
-from datetime import datetime
-
-# ...rest of your CLI code
-
+tests/test_tracker.py
 Python
 import unittest
 from pathlib import Path
@@ -163,12 +156,14 @@ TEST_DB.parent.mkdir(exist_ok=True)
 
 class TestExpenseTracker(unittest.TestCase):
     def setUp(self):
-        if TEST_DB.exists(): TEST_DB.unlink()
+        if TEST_DB.exists():
+            TEST_DB.unlink()
         self.tracker = ExpenseTracker()
 
     def tearDown(self):
         self.tracker.close()
-        if TEST_DB.exists(): TEST_DB.unlink()
+        if TEST_DB.exists():
+            TEST_DB.unlink()
 
     def test_add_and_total(self):
         e1 = Expense("Lunch", 10.5, "2026-04-07", "Food")
