@@ -131,7 +131,7 @@ class ExpenseTracker:
             writer = csv.writer(f)
             writer.writerow(["ID", "Name", "Amount", "Date", "Category"])
             writer.writerows(expenses)
-        print(f"✅ Expenses exported to {path}")
+        print(f" Expenses exported to {path}")
 
     def set_budget_alert(self, amount):
         self.budget_alert = amount
@@ -139,7 +139,7 @@ class ExpenseTracker:
     def check_budget_alert(self):
         total = self.total_spending()
         if self.budget_alert and total > self.budget_alert:
-            print(f"⚠️ Alert! You exceeded your budget of ${self.budget_alert:.2f} by ${total - self.budget_alert:.2f}")
+            print(f"  Alert! You exceeded your budget of ${self.budget_alert:.2f} by ${total - self.budget_alert:.2f}")
 
     def close(self):
         self.db.close()
